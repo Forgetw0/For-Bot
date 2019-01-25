@@ -20,3 +20,17 @@ bot.on('message', async message => {
     let messageArray = message.content.split(' ')
     let command = messageArray[0]
     let args = messageArray.slice(1)
+
+    let command_file = bot.commands.get(command.slice(prefix.length))
+    if (command_file) command_file.run(bot, message, args)
+    
+    if (message.content.startsWith(prefix + 'help')) {
+        message.channel.send('/mute [участник] [причина] /ban [участник] [причина] /kick [участник] [причина] /send [текст] /serverinfo /prune [число](очищает чат)')
+    }
+});
+
+bot.login(config.token);
+bot.on('ready', () => {
+    console.log(`${bot.user.username} online`);
+bot.user.setPresence({status: 'dnd', game:{name: 'Префикс "/" By Fazion', type: 0}});
+});
